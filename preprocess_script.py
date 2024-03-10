@@ -22,20 +22,30 @@ for img_file in tqdm(img_files):
     image = cv2.imread(img_path)
     
     # Resize the image to 128x128
-    resized_image = cv2.resize(image, (128, 128))
+    resized_image = cv2.resize(image, (500, 500))
     
     # Normalize pixel values to range [0, 1]
     normalized_image = resized_image / 255.0
+
+    # Convert the image to LAB color space
+    lab_image = cv2.cvtColor(np.uint8(normalized_image * 255), cv2.COLOR_BGR2Lab)
     
-    # Optionally, convert to grayscale
-    # grayscale_image = cv2.cvtColor(normalized_image, cv2.COLOR_BGR2GRAY)
+    # Split the LAB image into L, A and B channels
+    l_channel, a_channel, b_channel = cv2.split(lab_image)
+
+    # Apply CLAHE to L channel
+    clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8,8))
+    clahe_l_channel = clahe.apply(l_channel)
     
-    # Enhance contrast using Adaptive Histogram Equalization
-    enhanced_image = exposure.equalize_adapthist(normalized_image, clip_limit=0.03)
+    # Merge the CLAHE enhanced L channel with the original A and B channel
+    enhanced_image = cv2.merge((clahe_l_channel, a_channel, b_channel))
+    
+    # Convert the LAB image back to BGR color space
+    clahe_image = cv2.cvtColor(enhanced_image, cv2.COLOR_Lab2BGR)
     
     # Save the processed image
     save_path = os.path.join(processed_img_directory, img_file)
     # Assuming that enhanced_image is in the range [0, 1], we need to scale it back to [0, 255] for saving
-    cv2.imwrite(save_path, np.uint8(enhanced_image * 255))
+    cv2.imwrite(save_path, clahe_image)
 
 print('Preprocessing completed.')
