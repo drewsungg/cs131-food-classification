@@ -12,6 +12,5 @@ dependencies:
   - opencv
   - scikit-learn
   - pip
-  - pip: 
-    - jupyterlab
-
+  - pip:
+      - jupyterlab
