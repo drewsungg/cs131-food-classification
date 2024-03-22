@@ -15,7 +15,7 @@ import matplotlib.pyplot as plt
 def load_image(image_path):
     img = cv2.imread(image_path)
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-    img = cv2.resize(img, (160, 160))  # Match MobileNetV2's expected input
+    img = cv2.resize(img, (160, 160))  # Resize to MobileNetV2's expected input
     img = img / 255.0
     return img
 

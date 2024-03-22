@@ -15,7 +15,7 @@ import matplotlib.pyplot as plt
 def load_image(image_path):
     img = cv2.imread(image_path)
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-    img = cv2.resize(img, (160, 160))  # Resize to MobileNetV2 expected size
+    img = cv2.resize(img, (160, 160))  # Resize to MobileNetV2's expected input
     img = img / 255.0
     return img
 
@@ -36,9 +36,9 @@ def load_dataset(labels_path, images_dir):
             labels.append(primary_label)
     return np.array(images), np.array(labels)
 
-# Load your dataset
-images_dir = './preprocessedImages'  # Update this path
-labels_path = './menu_match_dataset/labels.txt'  # Update this path
+# Load dataset
+images_dir = './preprocessedImages'  
+labels_path = './menu_match_dataset/labels.txt'  
 images, labels = load_dataset(labels_path, images_dir)
 
 # Encode labels

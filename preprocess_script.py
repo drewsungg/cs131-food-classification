@@ -45,7 +45,6 @@ for img_file in tqdm(img_files):
     
     # Save the processed image
     save_path = os.path.join(processed_img_directory, img_file)
-    # Assuming that enhanced_image is in the range [0, 1], we need to scale it back to [0, 255] for saving
     cv2.imwrite(save_path, clahe_image)
 
 print('Preprocessing completed.')

@@ -12,7 +12,7 @@ def extract_hog_features(image_path):
     image = cv2.imread(image_path)
     if image is None:
         raise FileNotFoundError(f"Image not found: {image_path}")
-    image_resized = cv2.resize(image, (500, 500))  # Resize the image to a fixed size
+    image_resized = cv2.resize(image, (500, 500)) 
     
     # Specify channel_axis=-1 for color images to indicate that the color channels are the last axis
     features, _ = hog(image_resized, orientations=8, pixels_per_cell=(16, 16),
@@ -30,13 +30,10 @@ def load_dataset(labels_path, images_dir):
     for line in lines:
         parts = line.strip().split(';')
         if not parts or len(parts) < 2:
-            continue  # Skip lines that don't have at least 2 parts
+            continue
         
         image_file = parts[0].strip()
         image_labels = parts[1:]
-        
-        # Assuming you want to consider only the first label for simplicity
-        # If you need to handle multiple labels per image, you'll need to adjust this logic
         primary_label = image_labels[0].strip()
         
         image_path = os.path.join(images_dir, image_file)
@@ -46,7 +43,7 @@ def load_dataset(labels_path, images_dir):
     
     return image_paths, labels
 
-# Main program starts here
+
 if __name__ == "__main__":
     labels_path = './menu_match_dataset/labels.txt'  
     images_dir = './preprocessedImages'  

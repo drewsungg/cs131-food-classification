@@ -53,7 +53,7 @@ def augment_images(X_train, y_train, augment_factor=2):
         for X, y in datagen.flow(X_train, y_train, batch_size=len(y_train), shuffle=False):
             augmented_images.extend(X)
             augmented_labels.extend(y)
-            break  # Generate one set of augmented data per call
+            break 
     return np.array(augmented_images), np.array(augmented_labels)
 
 images_dir = './preprocessedImages'
@@ -76,7 +76,7 @@ class_weights = compute_class_weight('balanced', classes=np.unique(encoded_label
 class_weights_dict = dict(enumerate(class_weights))
 
 base_model = MobileNetV2(weights='imagenet', include_top=False, input_shape=(128, 128, 3))
-base_model.trainable = False  # Freeze the base model
+base_model.trainable = False 
 
 model = models.Sequential([
     base_model,
